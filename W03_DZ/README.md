@@ -36,13 +36,18 @@ OpenJDK 64-Bit Server VM (build 11.0.11+9-Ubuntu-0ubuntu2.20.04, mixed mode, sha
 
 IDE - обе видны:
 
-ide_01.png - есть VS Code и IntelliJ Idea
+есть VS Code и IntelliJ Idea
+![есть VS Code и IntelliJ Idea](https://github.com/sergei-baranov/otus_java_basic/blob/master/W03_DZ/ide_01.png?raw=true)
 
 
 ### Открыть данный класс в IDE
 
-ide_02.png - открываю файл в Идее
-ide_03.png - вот он открытый
+открываю файл в Идее
+![открываю файл в Идее](https://github.com/sergei-baranov/otus_java_basic/blob/master/W03_DZ/ide_02.png?raw=true)
+
+вот он открытый
+![вот он открытый](https://github.com/sergei-baranov/otus_java_basic/blob/master/W03_DZ/ide_03.png?raw=true)
+
 
 ### Скомпилировать данный класс с помощью команды javac.
 
@@ -53,7 +58,7 @@ console_01.png  HomeWork.class  HomeWork.java  ide_01.png  ide_02.png  ide_03.pn
 s_baranov@nb011:~/otus_java_basic/W03_DZ$ 
 ```
 
-console_02.png
+![javac](https://github.com/sergei-baranov/otus_java_basic/blob/master/W03_DZ/console_02.png?raw=true)
 
 
 ### Запустить программу на выполнение с помощью команды java
@@ -73,13 +78,15 @@ Program result: U2VyZ2VpIEJhcmFub3Y=
 s_baranov@nb011:~/otus_java_basic/W03_DZ$ 
 ```
 
-console_03.png
+![java_console](https://github.com/sergei-baranov/otus_java_basic/blob/master/W03_DZ/console_03.png?raw=true)
 
 
 ### Запустить программу на выполнение с помощью среды разработки
 
-ide_04.png
-ide_05.png
+![ide_04](https://github.com/sergei-baranov/otus_java_basic/blob/master/W03_DZ/ide_04.png?raw=true)
+
+![ide_05](https://github.com/sergei-baranov/otus_java_basic/blob/master/W03_DZ/ide_05.png?raw=true)
+
 
 ```
 /usr/lib/jvm/java-1.11.0-openjdk-amd64/bin/java -javaagent:/home/s_baranov/idea-IU/lib/idea_rt.jar=37775:/home/s_baranov/idea-IU/bin -Dfile.encoding=UTF-8 HomeWork
@@ -115,12 +122,15 @@ HomeWork.java
 s_baranov@nb011:~/otus_java_basic/W03_DZ$ 
 ```
 
-Переоткрываю проект:
+Переоткрываю проект
 
-ide_06.png
+![Переоткрываю проект](https://github.com/sergei-baranov/otus_java_basic/blob/master/W03_DZ/ide_06.png?raw=true)
 
 Далее опять выставляю SDK (11.0.10).
-Создаю конфигурацию HomeWork (ide_07.png).
+Создаю конфигурацию HomeWork.
+
+![Создаю конфигурацию HomeWork](https://github.com/sergei-baranov/otus_java_basic/blob/master/W03_DZ/ide_07.png?raw=true)
+
 Запускаю:
 
 ```
@@ -132,7 +142,8 @@ Program result: U2VyZ2VpIEJhcmFub3Y=
 Process finished with exit code 0
 ```
 
-ide_08.png
+![Запускаю](https://github.com/sergei-baranov/otus_java_basic/blob/master/W03_DZ/ide_08.png?raw=true)
+
 
 ### Когда программа запросит - введите свое имя латиницей
 
@@ -141,7 +152,10 @@ Sergei Baranov
 ### Отправить в чат задания скриншоты обоих запусков и строку результата работы программы
 
 console_03.png
+![console_03](https://github.com/sergei-baranov/otus_java_basic/blob/master/W03_DZ/console_03.png?raw=true)
+
 ide_08.png
+![ide_08](https://github.com/sergei-baranov/otus_java_basic/blob/master/W03_DZ/ide_08.png?raw=true)
 
 Program result: U2VyZ2VpIEJhcmFub3Y=
 
