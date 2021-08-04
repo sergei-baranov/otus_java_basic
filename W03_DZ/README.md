@@ -14,9 +14,11 @@ s_baranov@nb011:~/otus_java_basic/W03_DZ$ touch ./HomeWork.java
 s_baranov@nb011:~/otus_java_basic/W03_DZ$ nano ./HomeWork.java
 ```
 
-![console_01](https://github.com/[username]/[reponame]/blob/[branch]/console_01.png?raw=true)
-console_01.png - создаём объекты файловой системы
-nano.png - сохраняем код в nano
+создаём объекты файловой системы
+![создаём объекты файловой системы](https://github.com/sergei-baranov/otus_java_basic/blob/master/W03_DZ/console_01.png?raw=true)
+
+сохраняем код в nano
+![сохраняем код в nano](https://github.com/sergei-baranov/otus_java_basic/blob/master/W03_DZ/nano.png?raw=true)
 
 
 ### Установить JDK и среду разработки
