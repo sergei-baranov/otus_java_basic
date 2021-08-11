@@ -156,6 +156,7 @@ public class VeggieTest {
             {SmeltSmell.CUCUMBER, SmeltSmell.TOMATO, SmeltSmell.POTATO, SmeltSmell.PUMPKIN, SmeltSmell.ONION}
         };
          */
+
         // потренируюсь заполнять динамически, когда длина строк разная
         Question[][] questions = new Question[3][];
 
@@ -186,7 +187,7 @@ public class VeggieTest {
             }
             System.out.println("\nВведите номер правильного ответа");
 
-            int value = sc.nextInt();
+            int value = sc.nextInt(); /** @TODO обработка ошибок */
             // answers[0], а не answers, так как со статиком мне ещё пока не решить,
             // чтобы запихнуть в один массив разные енумы, как там его унаследовать от общего интерфейса
             boolean correct = answers[0].getIsCorrect(value);
