@@ -1,0 +1,133 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+scale 1.0
+title VeggieTest App Class Diagrams
+skinparam class {
+  ' задаем светложёлтый цвет для фона классов по умолчанию
+  BackgroundColor LightYellow
+  ' задаем синий цвет для связей классов по умолчанию
+  ArrowColor Blue
+  ' задаем синий цвет для контуров классов по умолчанию
+  BorderColor Blue
+  ' задаем красный цвет для контуров классов, для которых шаблоном является Exc
+    BorderColor<<Exception>> Red
+}
+
+' Exc
+class IOException <<Exception>>
+class NumberFormatException <<Exception>>
+class Exception <<Exception>>
+
+' IntReader
+class InputStreamReader
+class BufferedReader
+class IntReader {
+  {field} -int lastValue
+  {field} -BufferedReader reader
+  {method} +int read()
+}
+' Association
+' IntReader использует IOException-а
+IOException "many" <-- "1" IntReader #line:red;line.bold;text:red : assoc\n(throw)
+' Association
+' IntReader использует NumberFormatException-а
+NumberFormatException "many" <-- "1" IntReader #line:red;line.bold;text:red : assoc\n(throw)
+' Association
+' IntReader использует Exception-а
+Exception "many" <-- "1" IntReader #line:red;line.bold;text:red : assoc\n(throw)
+
+' Association
+' IntReader использует BufferedReader-а
+BufferedReader "1" <-- "1" IntReader : assoc\n(use)
+' Composition
+' BufferedReader не может существовать без InputStreamReader
+InputStreamReader "1" *-- "1" BufferedReader : compos\n(need)
+
+
+' Question
+/'
+- private
+# protected
+~ package private
++ public
+'/
+interface Question {
+  {method} +String question()
+  {method} +int value()
+  {method} +String humanValue()
+  {method} +boolean getIsCorrect(int value)
+}
+
+enum SmeltSmellQuestion {
+  CUCUMBER
+  TOMATO
+  POTATO
+  PUMPKIN
+  ONION
+}
+' Realization / Implementation
+SmeltSmellQuestion <|.. Question : Impl
+enum CucumberColorQuestion {
+  RED
+  GREEN
+  BLUE
+}
+' Realization / Implementation
+CucumberColorQuestion <|.. Question : Impl
+enum TomatoFormQuestion {
+  ROUND
+  SQUARE
+  TRIANGULAR
+}
+' Realization / Implementation
+TomatoFormQuestion <|.. Question : Impl
+
+' TestComposer
+class TestComposer {
+  {method} +Question[][] buildTestQuestions()
+}
+' Aggregation
+' TestComposer собирает в себе Question-ы,
+' но они могут существовать без TestComposer-а
+TestComposer "1" o-- "many" Question : aggr\n(collect)
+
+' System.out
+class System.out
+' TestExecutor
+class TestExecutor {
+  {field} -int counterValid = 0;
+  {field} -int counterAll
+  {field} -IntReader intReader
+  {field} -Question[][] questions
+  {field} -TestComposer composer
+  {method} +void execute()
+}
+' Association
+' TestExecutor использует IntReader-а
+TestExecutor "1" --> "1" IntReader : assoc\n(use)
+' Composition
+' TestExecutor не может существовать без TestComposer-а
+TestComposer "1" *-- "1" TestExecutor : compos\n(need)
+' Aggregation
+' TestExecutor собирает в себе Question-ы,
+' но они могут существовать без TestExecutor-а
+TestExecutor "1" o-- "many" Question : aggr\n(contains)
+' Association
+' TestExecutor использует System.out
+TestExecutor "1" --> "1" System.out : assoc\n(use)
+
+' VeggieTest
+class VeggieTest {
+  {field} {static} -TestComposer composer
+  {field} {static} -TestExecutor executor
+  {method} {static} +void main()
+}
+' Association
+' VeggieTest использует TestComposer-а
+VeggieTest "1" --> "1" TestComposer : assoc\n(use)
+' Association
+' VeggieTest использует TestExecutor-а
+VeggieTest "1" --> "1" TestExecutor : assoc\n(use)
+
+@enduml
