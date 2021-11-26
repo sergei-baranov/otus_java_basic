@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="ru"><head>
+    <meta http-equiv='Content-Type' content='text/html;charset=UTF-8'>
+
+    <title>ДЗ по вебинару 20</title>
+    <style>
+      html, body, td, input, option {
+          font-weight: normal;
+          font-family: Licida Console;
+          font-size: 16px;
+          color: black;
+      }
+      #appendForm {
+          border: solid blue 1px;
+          width: 700px;
+          margin: 20 px;
+          padding: 8px;
+      }
+      #appendForm input, #appendForm select {
+        border: solid blue 1px;
+      }
+      #note_failure, #note_success {
+          display: none;
+          border: solid red 1px;
+          padding: 8px;
+          font-family: monospace;
+          color: red;
+          margin: 8px 8px 8px 0px;
+          width: 700px;
+      }
+      #note_success {
+          border-color: green;
+          color: green;
+      }
+      #uBirth {
+        background-image: url(datepicker.svg);
+        background-repeat: no-repeat;
+        background-position: top right;
+      }
+      #tbl {
+          background-color: blue;
+          width: 100%;
+      }
+      #tbl td, #tbl th {
+        background-color: white;
+      }
+    </style>
+
+    <script type="text/javascript">
+        function noteFailure(message) {
+            noteMsg(message, true);
+        }
+        function noteSuccess(message) {
+            noteMsg(message, false);
+        }
+        function noteMsg(msg, failure) {
+            const elF = document.getElementById('note_failure');
+            const elS = document.getElementById('note_success');
+
+            if (elF) {
+                elF.style.display = "none";
+            }
+            if (elS) {
+                elS.style.display = "none";
+            }
+
+            setTimeout(() => {
+                if (elF) {
+                    elF.innerHTML = (failure ? msg : "");
+                    elF.style.display = (failure ? "block" : "none");
+                } else {
+                    console.log("can not find #note_failure element");
+                }
+
+                if (elS) {
+                    elS.innerHTML = (failure ? "" : msg);
+                    elS.style.display = (failure ? "none" : "block");
+                } else {
+                    console.log("can not find #note_success element");
+                }
+            }, 100);
+        }
+
+        function getUName() {
+            const uNameEl = document.getElementById('uName');
+            if (!uNameEl) {
+                noteFailure('Error: can not find Name field');
+                return false;
+            }
+            const nameval = uNameEl.value.trim();
+            if (!nameval.length) {
+                noteFailure('В поле "Имя" надо что-то ввести');
+                return false;
+            }
+
+            return nameval;
+        }
+
+        function getGender() {
+            const uGenderEl = document.getElementById('uGender');
+            if (!uGenderEl) {
+                noteFailure('Error: can not find Gender field');
+                return false;
+            }
+            const genderval = uGenderEl.value;
+
+            return genderval;
+        }
+
+        function getBirthdate() {
+            const uBirthEl = document.getElementById('uBirth');
+            if (!uBirthEl) {
+                noteFailure('Error: can not find Birthday field');
+                return false;
+            }
+            const dateval = uBirthEl.value.trim();
+            const reRuDate = /^\d\d?\.\d\d?\.\d\d\d\d$/;
+            if (!reRuDate.test(dateval)) {
+                noteFailure('В поле "Дата рождения" ожидается дата в формате dd.mm.yyyy');
+                return false;
+            }
+            const dateArr = dateval.split('.');
+            const iD = parseInt(dateArr[0], 10);
+            const iM = parseInt(dateArr[1], 10);
+            const iY = parseInt(dateArr[2], 10);
+            let dateO;
+            try {
+                dateO = new Date(iY, iM, iD, 12, 0, 0, 0);
+            } catch (e) {
+                console.log('Exception: Invalid date (' + dateval + ')' + dateval + ": [" + iD + "].[" + iM + "].[" + iY + "]");
+                noteFailure('Exception: Invalid date (' + dateval + ')');
+                return false;
+            }
+            if (
+                isNaN(dateO.getDate())
+                || isNaN(dateO.getMonth())
+                || isNaN(dateO.getFullYear())
+            ) {
+                console.log('Error: Invalid date (' + dateval + ') ('+ iD +').('+ iM +').('+ iY +') ('+ dateO.getDate() +').('+ dateO.getMonth() +').('+ dateO.getFullYear() +')');
+                noteFailure('Error: Invalid date (' + dateval + ')');
+                return false;
+            }
+            let dateValidated = dateO.getDate() + '.' + dateO.getMonth() + '.' + dateO.getFullYear();
+            let dateValidated2 = '' + iD + '.' + iM + '.' + iY;
+            console.log(dateValidated + " (" + dateValidated2 + ")");
+            uBirthEl.value = dateValidated;
+
+            return dateValidated;
+        }
+
+        function calculateAge(birthday) { // birthday is a date
+            var ageDifMs = Date.now() - birthday;
+            var ageDate = new Date(ageDifMs); // miliseconds from epoch
+            return Math.abs(ageDate.getUTCFullYear() - 1970);
+        }
+
+        function appendRow(name_val, gender_val, birthdate_val) {
+            const tbodyEl = document.getElementById('studsTable');
+            if (!tbodyEl) {
+                noteFailure('Error: can not find Tbody');
+                return false;
+            }
+            
+            const avgAgeEl = document.getElementById('avgAge');
+            if (!avgAgeEl) {
+                noteFailure('Error: can not find avgAge');
+                return false;
+            }
+
+            let cellName = document.createElement('td');
+            cellName.innerText = name_val;
+            let cellGender = document.createElement('td');
+            cellGender.innerText = gender_val;
+            let cellBirthdate = document.createElement('td');
+            cellBirthdate.className = "bdt";
+            cellBirthdate.innerText = birthdate_val;
+            let cellAge = document.createElement('td');
+            cellAge.className = "ag";
+            let nextDateArr = birthdate_val.split(".");
+            let iNextD = parseInt(nextDateArr[0], 10);
+            let iNextM = parseInt(nextDateArr[1], 10);
+            let iNextY = parseInt(nextDateArr[2], 10);
+            let nextDate = new Date(iNextY, iNextM, iNextD, 12, 0, 0, 0);
+            cellAge.innerText = calculateAge(nextDate);
+            let rowEl = document.createElement('tr');
+
+            rowEl.appendChild(cellName);
+            rowEl.appendChild(cellGender);
+            rowEl.appendChild(cellBirthdate);
+            rowEl.appendChild(cellAge);
+
+            tbodyEl.appendChild(rowEl);
+
+            let sumAge = 0;
+            let collAges = document.getElementsByClassName("ag");
+            if (collAges.length) {
+                for (let nextTd of collAges) {
+                    let nextAge = nextTd.innerText;
+                    sumAge += parseInt(nextAge);
+                }
+                avgAgeEl.innerText = Math.floor(sumAge/collAges.length);
+            } else {
+                avgAgeEl.innerText = "0";
+            }
+        }
+
+        function appendUser() {
+            // имя
+            const name_val = getUName();
+            if (false === name_val) {
+                return false;
+            }
+
+            // Пол
+            const gender_val = getGender();
+            if (false === gender_val) {
+                return false;
+            }
+
+            // дата
+            const birthdate_val = getBirthdate();
+            if (false === birthdate_val) {
+                return false;
+            }
+
+            // добавляем строку в таблицу и считаем среднее
+            appendRow(name_val, gender_val, birthdate_val);
+
+            //
+            return false; // блокируем дефалтное действие кнопки
+        }
+    </script>
+</head>
+<body>
+<div>
+    <div id="note_failure"></div>
+    <div id="note_success"></div>
+</div>
+<form name="appendForm" id="appendForm">
+    <h2>Форма добавления информации о студенте</h2>
+    <table width="100%" cellspacing="1" cellpadding="4"><tbody>
+        <tr>
+            <td>Имя студента:</td>
+            <td><input type="text" name="uName" id="uName" placeholder="Введите имя" /></td>
+        </tr>
+        <tr>
+            <td>Дата рождения:</td>
+            <td><input type="text" name="uBirth" id="uBirth" placeholder="dd.mm.yyyy" /></td>
+        </tr>
+        <tr>
+            <td>Пол:</td>
+            <td>
+                <select name="uGender" id="uGender">
+                    <option name="" id="" value="мужчина">мужчина</option>
+                    <option name="" id="" value="женщина">женщина</option>
+                </select>
+            </td>
+        </tr>
+        <tr><td colspan="2"><input type="button" value="Добавить" onclick="return appendUser();" /></td></tr>
+    </tbody></table>
+
+    <h2>Таблица студентов</h2>
+    <table id="tbl"><thead><tr>
+        <th>Имя студента</th>
+        <th>Пол</th>
+        <th>Дата рождения</th>
+        <th>Возраст</th>
+    </tr></thead>
+    <tbody id="studsTable">
+        <!-- -->
+    </tbody>
+    <tfoot>
+        <tr><td colspan="4">&nbsp;</td></tr>
+        <tr>
+            <th colspan="3">Средний возраст студентов</th>
+            <th id="avgAge">0</th>
+        </tr>
+    </tfoot>
+    </table>
+</form>
+</body></html>
